@@ -133,14 +133,14 @@ delGuerre = (msg, data) =>{
                 for(let i = 0; i < data.length; i++){
                     lastLigne = data[i].content;
                     const m = data[i];
-                    if(NbDeCbl-2 <= num && num <= NbDeCbl){
+                    if(NbDeCbl-2 <= num && num <= NbDeCbl){// si c'est la bonne ligne
                         if(num - parseInt(num/3)*3 !== 0){
+                            console.log("change")
                             const strNum = (num+1<10) ? "0"+(num+1) : (num+1).toString();
                             
                             for(let e = lastLigne.length-1; e>-1; e--){
                                 if(Number.isInteger(parseInt(lastLigne[e-1]) + parseInt(lastLigne[e])) && lastLigne[e-1]+lastLigne[e] === strNum){
                                     const reponse = lastLigne.substr(0,e-5);
-//                                    console.log(data);
                                     data[i].edit(reponse);
                                     return "end"
                                 };
