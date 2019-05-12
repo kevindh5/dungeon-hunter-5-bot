@@ -30,7 +30,7 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 };
                 
                 msg.channel.send(":information_source: Leader   //   Stratégie");
-                msg.channel.send(":shield: Préparation Frénésie, raids armurie 1 à 9");
+                msg.channel.send(":shield: Préparation Frénésie, raids armurerie 1 à 9");
                 msg.channel.send(":boom: Dclcht Frénésie, raids armurie 10 à 12");
                 
                 
