@@ -6,6 +6,8 @@ const guerre  = require("./module guerre");
 const ROLE = "Leader"
 const NOM_BOT = "Bot Lumière"
 
+let emoji_react;
+
 let lastWarMsg = {}
 bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
 bot.on("ready", ()=>{
@@ -13,8 +15,8 @@ bot.on("ready", ()=>{
         lastWarMsg[g.name] = [];
         return true
     })
-    console.log('Le but est près');
-    
+    console.log('Le bot est près');
+    emoji_react = bot.emojis.get("577195480816287786");
 });
 
 bot.on("message", (msg) => {
@@ -25,7 +27,8 @@ bot.on("message", (msg) => {
     }
     else if(msg.author.bot === true && msg.author.username === NOM_BOT){
        if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:")){
-           msg.react("🆓");
+           const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
+           msg.react(reaction);
            lastWarMsg[msg.guild.name].unshift(msg);
        }
     }

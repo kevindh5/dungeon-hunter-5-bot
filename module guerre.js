@@ -67,14 +67,14 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 }
                 
                 msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
-                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
-
-                    if(members.user.username === author){
-                        members.send("Une guerre a commencé !!!");
-                    };
-
-                    return true
-                });
+//                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
+//
+//                    if(members.user.username === author){
+//                        members.send("Une guerre a commencé !!!");
+//                    };
+//
+//                    return true
+//                });
                 
             }
             else{
