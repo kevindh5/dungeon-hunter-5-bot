@@ -30,8 +30,8 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 };
                 
                 msg.channel.send(":information_source: Leader   //   Stratégie");
-                msg.channel.send(":information_source: Préparation Frénésie, raid armurie 1 à 9");
-                msg.channel.send(":information_source: Déclenchement de la Frénésie, rai armurie 10 à12");
+                msg.channel.send(":shield: Préparation Frénésie, raids armurie 1 à 9");
+                msg.channel.send(":boom: Dclcht Frénésie, raids armurie 10 à 12");
                 
                 
                 for(let i = 0; i < parseInt(num/3); i++){
@@ -75,6 +75,7 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
 
                     return true
                 });
+                
             }
             else{
                 msg.reply("Le nombre de joueurs ennemis doit être inferieur à 31.")
@@ -85,8 +86,8 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
     };
 };
 
-delGuerre = (msg, data, discord) =>{
-    console.log(data[msg.guild.name].length);
+delGuerre = (msg, data) =>{
+//    console.log(data[msg.guild.name].length);
     const index = "!delGuerre"
     if(index === msg.content){
        msg.reply("Il manque l'argument signifiant jusqu'a où vous voulez enlever de cibles: !delGuerre 15 .") 
@@ -115,78 +116,66 @@ delGuerre = (msg, data, discord) =>{
             let lastLigne = data[0].content;
             
             let NbDeCbl;
+            let securite = (lastLigne[lastLigne.length - 1] === ">") ? false: true;
             for(let i = lastLigne.length-1; i>-1; i--){
-                if(Number.isInteger(parseInt(lastLigne[i-1]) + parseInt(lastLigne[i]))){
+            
+                securite = (lastLigne[i] === ">") ? false : (lastLigne[i] === "<") ?  true: securite;
+                if(Number.isInteger(parseInt(lastLigne[i-1]) + parseInt(lastLigne[i])) && securite === true){
                     NbDeCbl = parseInt(lastLigne[i-1]+lastLigne[i]);
                     break;
                 };
             };
-
-            console.log(NbDeCbl);
             
             if(NbDeCbl <= num){
                 msg.reply("Vous devez mettre un nombre inferieur à "+ NbDeCbl);
             }
             else{
                 for(let i = 0; i < data.length; i++){
-                    
                     lastLigne = data[i].content;
                     const m = data[i];
                     if(NbDeCbl-2 <= num && num <= NbDeCbl){
-                        console.log("change");
                         if(num - parseInt(num/3)*3 !== 0){
                             const strNum = (num+1<10) ? "0"+(num+1) : (num+1).toString();
                             
                             for(let e = lastLigne.length-1; e>-1; e--){
                                 if(Number.isInteger(parseInt(lastLigne[e-1]) + parseInt(lastLigne[e])) && lastLigne[e-1]+lastLigne[e] === strNum){
                                     const reponse = lastLigne.substr(0,e-5);
-                                    console.log(reponse);
 //                                    console.log(data);
                                     data[i].edit(reponse);
-                                    break;
+                                    return "end"
                                 };
                             };
 
                         }
                         else{
-                            console.log("delete");
                             data[i].delete();
                             NbDeCbl -= 3;
+                            NbDeCbl = (NbDeCbl - parseInt(NbDeCbl/3)*3 > 0) ? NbDeCbl - (NbDeCbl - parseInt(NbDeCbl/3)*3) : NbDeCbl - 3;
+                            return "end";
                         }
     //                    console.log("2")
     //                    data[0].delete();
                     }
                     else{
-                        NbDeCbl -= 3;
+                        NbDeCbl = (NbDeCbl - parseInt(NbDeCbl/3)*3 > 0) ? NbDeCbl - (NbDeCbl - parseInt(NbDeCbl/3)*3) :NbDeCbl- 3;
+                        
                         data[i].delete();
                     }
                 }
-//                for(let i = 0; i < data.length; i++){
-//                    
-//                }
             }
             
-                
-            
-            
+
         }
         
     }
-//    
-//    
-//    msg.channel.fetchMessages({limit: 10}).then(
-//        m => {
-//            for(let i = 0; i< data.length; i++){
-//                console.log(m.get(data[i]).content);
-//                console.log('------------------------------------------------------------------')
-//            };
-//        }
-//    ).catch(console.error);
+
     
    
     
    
 }
+
+
 
 aideGuerre = msg =>{
     msg.member.send("Le tableau est constitué de lignes représentant chaque joueur ennemi.");

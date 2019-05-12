@@ -4,7 +4,7 @@ const commandsLead = ["!newGuerre","!delGuerre"];
 const commands = ["!aideGuerre"]
 const guerre  = require("./module guerre");
 const ROLE = "Leader"
-const NOM_BOT = "Dungeon Hunter 5 Bot"
+const NOM_BOT = "Bot Lumière"
 
 let lastWarMsg = {}
 bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
@@ -13,15 +13,18 @@ bot.on("ready", ()=>{
         lastWarMsg[g.name] = [];
         return true
     })
+    console.log('Le but est près');
     
 });
 
 bot.on("message", (msg) => {
+//    const a = (1 === 2) ? "1":  (1===2) ? "2": "3";
+
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
     }
     else if(msg.author.bot === true && msg.author.username === NOM_BOT){
-       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:")){
+       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:")){
            msg.react("🆓");
            lastWarMsg[msg.guild.name].unshift(msg);
        }
@@ -34,12 +37,11 @@ bot.on("message", (msg) => {
             switch(command){
                 case "!newGuerre": if(lastWarMsg[msg.guild.name].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
                                         lastWarMsg[msg.guild.name] = [];
-                                        console.log(lastWarMsg[msg.guild.name]);
-                                    }
+                                    };
                                       
                                     guerre.newGuerre(msg, msg.content); //pour que cela n'aye pas voir les commandes non-leader
                     break;
-                case "!delGuerre": guerre.delGuerre(msg, lastWarMsg, Discord);
+                case "!delGuerre": guerre.delGuerre(msg, lastWarMsg);
                     break;
                 default:
                     msg.reply("La commande donnée n'est pas bonne.");//ne sear jamais utilisée
