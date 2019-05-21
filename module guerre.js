@@ -129,32 +129,16 @@ delGuerre = (msg, data) =>{
             if(NbDeCbl <= num){
                 msg.reply("Vous devez mettre un nombre inferieur à "+ NbDeCbl);
             }
+            else if(num - parseInt(num/3)*3 !== 0){
+                msg.reply("Le nombre doit être un multiple de 3.")
+            }
             else{
                 for(let i = 0; i < data.length; i++){
                     lastLigne = data[i].content;
-                    const m = data[i];
                     if(NbDeCbl-2 <= num && num <= NbDeCbl){// si c'est la bonne ligne
-                        if(num - parseInt(num/3)*3 !== 0){
-                            console.log("change")
-                            const strNum = (num+1<10) ? "0"+(num+1) : (num+1).toString();
-                            
-                            for(let e = lastLigne.length-1; e>-1; e--){
-                                if(Number.isInteger(parseInt(lastLigne[e-1]) + parseInt(lastLigne[e])) && lastLigne[e-1]+lastLigne[e] === strNum){
-                                    const reponse = lastLigne.substr(0,e-5);
-                                    data[i].edit(reponse);
-                                    return "end"
-                                };
-                            };
-
-                        }
-                        else{
-                            data[i].delete();
-                            NbDeCbl -= 3;
-                            NbDeCbl = (NbDeCbl - parseInt(NbDeCbl/3)*3 > 0) ? NbDeCbl - (NbDeCbl - parseInt(NbDeCbl/3)*3) : NbDeCbl - 3;
+                        if(num - parseInt(num/3)*3 == 0){
                             return "end";
                         }
-    //                    console.log("2")
-    //                    data[0].delete();
                     }
                     else{
                         NbDeCbl = (NbDeCbl - parseInt(NbDeCbl/3)*3 > 0) ? NbDeCbl - (NbDeCbl - parseInt(NbDeCbl/3)*3) :NbDeCbl- 3;

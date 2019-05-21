@@ -16,7 +16,7 @@ bot.on("ready", ()=>{
         return true
     })
     console.log('Le bot est près');
-    emoji_react = bot.emojis.get("577195480816287786");
+    emoji_react = bot.emojis.get("577222328895930368");
 });
 
 bot.on("message", (msg) => {
@@ -26,6 +26,7 @@ bot.on("message", (msg) => {
         return false;
     }
     else if(msg.author.bot === true && msg.author.username === NOM_BOT){
+        
        if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:")){
            const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
            msg.react(reaction);
