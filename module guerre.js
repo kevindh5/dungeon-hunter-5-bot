@@ -19,52 +19,19 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
         else{
             
             if(num < 31){
-                const author = msg.author.username;
-                let vert = msg.guild.emojis.get('573106067777650689');
-                let bleu = msg.guild.emojis.get('573115452511879168');
-                if(vert === undefined){
-                    vert = ":green_apple:" 
-                };
-                if(bleu === undefined){
-                    bleu = ':droplet:'
-                };
+                
                 
                 msg.channel.send(":information_source: Leader   //   Stratégie");
                 msg.channel.send(":shield: Préparation Frénésie, raids armurerie 1 à 9");
                 msg.channel.send(":boom: Dclcht Frénésie, raids armurie 10 à 12");
                 
                 
-                for(let i = 0; i < parseInt(num/3); i++){
-                    let c1 = (3*i+1);
-                    let c2 = (3*i+2);
-                    let c3 = (3*i+3)
-                    if(c1 < 10){//pour que se soit plus hestetique
-                        c1 = "0"+c1
-                    };
-                    if(c2 < 10){
-                        c2 = "0"+c2
-                    };
-                    if(c3 < 10){
-                        c3 = "0"+c3
-                    };
+                for(let i = 0; i < num; i++){
                     
-                    
-                    let reponse = "Cbl "+c1+": :star::star::star: Cbl "+c2+": "+vert.toString()+vert.toString()+vert.toString()+" Cbl "+c3+": "+ bleu.toString()+bleu.toString()+bleu.toString();
+                    let reponse = "Cbl "+(i+1)+": :star::star::star:"
                     msg.channel.send(reponse);
                 }
                 
-                if(num-parseInt(num/3)*3 === 1 && parseInt(num/3)*3+1 < 10){
-                    msg.channel.send("Cbl 0"+(parseInt(num/3)*3+1)+": :star::star::star:");
-                }
-                else if(num-parseInt(num/3)*3 === 1){
-                    msg.channel.send("Cbl "+(parseInt(num/3)*3+1)+": :star::star::star:");
-                }
-                else if(num-parseInt(num/3)*3 === 2 && parseInt(num/3)*3+1 < 10){
-                    msg.channel.send("Cbl 0"+(parseInt(num/3)*3+1)+": :star::star::star: Cbl 0"+(parseInt(num/3)*3+2)+": "+vert.toString()+vert.toString()+vert.toString());
-                }
-                else if(num-parseInt(num/3)*3 === 2){
-                     msg.channel.send("Cbl "+(parseInt(num/3)*3+1)+": :star::star::star: Cbl "+(parseInt(num/3)*3+2)+": "+vert.toString()+vert.toString()+vert.toString());   
-                }
                 
                 msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
 //                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
@@ -110,45 +77,27 @@ delGuerre = (msg, data) =>{
         else if (data.length === 0){
             msg.reply("Vous n'avez pas lancée de guerre, la commande est donc inutile");
         }
+        else if (num > 30){
+            msg.reply("Le nombre doit être inférieur à 30")
+        }
         else{
-            
-            
-            let lastLigne = data[0].content;
-            
-            let NbDeCbl;
-            let securite = (lastLigne[lastLigne.length - 1] === ">") ? false: true;
-            for(let i = lastLigne.length-1; i>-1; i--){
-            
-                securite = (lastLigne[i] === ">") ? false : (lastLigne[i] === "<") ?  true: securite;
-                if(Number.isInteger(parseInt(lastLigne[i-1]) + parseInt(lastLigne[i])) && securite === true){
-                    NbDeCbl = parseInt(lastLigne[i-1]+lastLigne[i]);
-                    break;
-                };
-            };
-            
-            if(NbDeCbl <= num){
-                msg.reply("Vous devez mettre un nombre inferieur à "+ NbDeCbl);
-            }
-            else if(num - parseInt(num/3)*3 !== 0){
-                msg.reply("Le nombre doit être un multiple de 3.")
+            console.log(data.length)
+            if(data.length < num){
+                msg.reply("Le nombre doit être au moins égale au nombre max de cibles")
             }
             else{
+                console.log("cc")
                 for(let i = 0; i < data.length; i++){
-                    lastLigne = data[i].content;
-                    if(NbDeCbl-2 <= num && num <= NbDeCbl){// si c'est la bonne ligne
-                        if(num - parseInt(num/3)*3 == 0){
-                            return "end";
-                        }
-                    }
+                    console.log(data.length-3-i);
+                    if( data.length-3-i > num){  //-3 car on enleve les 3 msg (frenésie, declenchemnt, armurie)
+                        console.log("ok")
+                        data[i].delete().catch(console.error);
+                    }   
                     else{
-                        NbDeCbl = (NbDeCbl - parseInt(NbDeCbl/3)*3 > 0) ? NbDeCbl - (NbDeCbl - parseInt(NbDeCbl/3)*3) :NbDeCbl- 3;
-                        
-                        data[i].delete();
+                        break
                     }
                 }
             }
-            
-
         }
         
     }
