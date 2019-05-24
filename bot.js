@@ -9,7 +9,7 @@ const NOM_BOT = "Bot Lumière"
 let emoji_react;
 
 let lastWarMsg = {}
-bot.login("NTgxNTQxMjk1NzY0NTM3MzU0.XOgwmg.-2bzRuqSLQ4kngYRa71P6jQd2tI");
+bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
 bot.on("ready", ()=>{
     bot.guilds.every(g => {
         lastWarMsg[g.name] = [];

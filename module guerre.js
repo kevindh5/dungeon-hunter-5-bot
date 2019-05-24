@@ -86,11 +86,9 @@ delGuerre = (msg, data) =>{
                 msg.reply("Le nombre doit être au moins égale au nombre max de cibles")
             }
             else{
-                console.log("cc")
                 for(let i = 0; i < data.length; i++){
                     console.log(data.length-3-i);
                     if( data.length-3-i > num){  //-3 car on enleve les 3 msg (frenésie, declenchemnt, armurie)
-                        console.log("ok")
                         data[i].delete().catch(console.error);
                     }   
                     else{
