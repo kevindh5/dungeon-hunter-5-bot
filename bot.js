@@ -4,7 +4,7 @@ const commandsLead = ["!newGuerre","!delGuerre"];
 const commands = ["!aideGuerre"]
 const guerre  = require("./module guerre");
 const ROLE = "Leader"
-const NOM_BOT = "bot_test"
+const NOM_BOT = "Bot Lumière"
 
 let emoji_react;
 
