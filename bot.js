@@ -10,6 +10,7 @@ let emoji_react;
 
 let lastWarMsg = {}
 bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
+
 bot.on("ready", ()=>{
     bot.guilds.every(g => {
         lastWarMsg[g.name] = [];
@@ -21,15 +22,19 @@ bot.on("ready", ()=>{
 
 bot.on("message", (msg) => {
 //    const a = (1 === 2) ? "1":  (1===2) ? "2": "3";
-
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
     }
     else if(msg.author.bot === true && msg.author.username === NOM_BOT){
         
-       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:")){
+       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content ==="!aideGuerre pour l'utilisation du tableau."){
+           
+           if(!msg.content.startsWith(":punch:")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
            const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
            msg.react(reaction);
+           }
+           
+           
            lastWarMsg[msg.guild.name].unshift(msg);
        }
     }
@@ -66,7 +71,14 @@ bot.on("message", (msg) => {
                     msg.reply("La commande donnée n'est pas bonne.");
             };
         }
+        
     };
+    
+    
+    
+    if(msg.system && msg.type === 'PINS_ADD'){// pour enlever les messages d'épinglage quand on fait une guerre doit être fait séprément car sinn cela rentre en opposition avec d'autre if
+            msg.delete().catch(console.error);
+    }
     
 });
 
@@ -84,6 +96,7 @@ bot.on("guildMemberUpdate", (before, after) =>{
         }
     };
 });
+
 
 
 
@@ -149,12 +162,10 @@ function longMsg(after, mode){
         after.send("Vous avez donc accès aux commandes qui permettent de contrôler le bot: "+NOM_BOT+" (moi)!");
         after.send("Pour l'instant il y a:");
         after.send("   !newGuerre [nb de joueur ennemi], elle permet de créer un tableau pour gérer les attaques; ex: "+commandsLead[0]);
-        after.send("   !delGuerre [num de cible conservée], elle permet de supprimer un nombre de cibles; ex: "+commandsLead[1]);
+        after.send("   !delGuerre [num de cible conservée], elle permet de supprimer un nombre de cibles; ex: "+commandsLead[1]+" 10");
+        after.send("   !rebootGuerre , elle permet d'enlever les reacitions , recommencer une guerre sans forcément refaire le tableau")
     }
     else{
         after.send("Vous êtes destitué du role de "+ROLE+" ,vous n'avez plus accès aux commandes pour me contrôler.").catch(console.error);
     };
 };
-
-
-

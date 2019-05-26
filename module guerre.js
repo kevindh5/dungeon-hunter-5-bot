@@ -20,7 +20,8 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
             
             if(num < 31){
                 
-                
+                msg.channel.send(":punch:_________TABLEAU DE GUERRE_________:punch:").then(m =>{m.pin();});
+                msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
                 msg.channel.send(":information_source: Leader   //   Stratégie");
                 msg.channel.send(":shield: raids armurerie 1 à 3");
                 msg.channel.send(":shield: raids armurerie 4 à 6");
@@ -33,9 +34,7 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                     let reponse = "Cbl "+(i+1)+": :star::star::star:"
                     msg.channel.send(reponse);
                 }
-                
-                
-                msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
+            
 //                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
 //
 //                    if(members.user.username === author){
@@ -57,16 +56,24 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
 
 delGuerre = (msg, data) =>{
 //    console.log(data[msg.guild.name].length);
-    const index = "!delGuerre"
-    if(index === msg.content){
-       msg.reply("Il manque l'argument signifiant jusqu'a où vous voulez enlever de cibles: !delGuerre 15 .") 
+    const index = "!delGuerre";
+    data = data[msg.guild.name];
+    if(data.length < 1){
+        msg.reply("Vous devez d'abord creer une guerre.")
+    }
+    else if(index === msg.content){
+        
+        for(let i = 0; i < data.length; i++){
+            data[i].delete().catch(console.error);
+        };
+        msg.channel.send("Suppression total de la guerre.");
+        return [] 
     }
     else if(msg.content[index.length] !== " "){
         msg.reply("Il doit avoir un espace entre la commande et le numéro, exemple: !delGuerre 25, ou !delGuerre 15 .") 
     }
     else if(msg.content.length > index.length+1){//permet de voir si il ya plus apres que simplement la commande  car on compte l'espace
         const num = parseInt(msg.content.substr(index.length+1));
-        data = data[msg.guild.name];
 
         
         
@@ -87,11 +94,8 @@ delGuerre = (msg, data) =>{
                 msg.reply("Le nombre doit être au moins égale au nombre max de cibles")
             }
             else{
-                console.log("cc")
                 for(let i = 0; i < data.length; i++){
-                    console.log(data.length-3-i);
-                    if( data.length-3-i > num){  //-3 car on enleve les 3 msg (frenésie, declenchemnt, armurie)
-                        console.log("ok")
+                    if( data.length-7-i > num){  //-7 car on enleve les 7 msg d'informations au début
                         data[i].delete().catch(console.error);
                     }   
                     else{
@@ -126,7 +130,7 @@ aideCommande = msg => {
 rebootGuerre = (msg, data) =>{
     data = data[msg.guild.name]
     if(data.length < 1){
-        msg.reply("Vous devez d'abord avoir lancé une guerre pour la réinitailisée")
+        msg.reply("Vous devez avoir lancé une guerre pour la réinitailisée")
     }
     else{
         for(let i = 0 ; i < data.length; i++){
