@@ -22,8 +22,10 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 
                 
                 msg.channel.send(":information_source: Leader   //   Stratégie");
-                msg.channel.send(":shield: Préparation Frénésie, raids armurerie 1 à 9");
-                msg.channel.send(":boom: Dclcht Frénésie, raids armurie 10 à 12");
+                msg.channel.send(":shield: raids armurerie 1 à 3");
+                msg.channel.send(":shield: raids armurerie 4 à 6");
+                msg.channel.send(":shield: raids armurerie 7 à 9");
+                msg.channel.send(":boom: Déclenchement Frénésie, 10 à 12");
                 
                 
                 for(let i = 0; i < num; i++){
@@ -81,14 +83,15 @@ delGuerre = (msg, data) =>{
             msg.reply("Le nombre doit être inférieur à 30")
         }
         else{
-            console.log(data.length)
             if(data.length < num){
                 msg.reply("Le nombre doit être au moins égale au nombre max de cibles")
             }
             else{
+                console.log("cc")
                 for(let i = 0; i < data.length; i++){
                     console.log(data.length-3-i);
                     if( data.length-3-i > num){  //-3 car on enleve les 3 msg (frenésie, declenchemnt, armurie)
+                        console.log("ok")
                         data[i].delete().catch(console.error);
                     }   
                     else{
@@ -99,10 +102,6 @@ delGuerre = (msg, data) =>{
         }
         
     }
-
-    
-   
-    
    
 }
 
@@ -115,6 +114,7 @@ aideGuerre = msg =>{
     msg.member.send("Les émojies indiquant les cibles que vous attaquez son des chiffres sur fond coloré.");
     msg.member.send("Chaque couleur correspond à une cible et le chiffre correspond au numero d'ordre de l'étoile");
     msg.member.send("Ces emojis s'inserent en dessous de la ligne de ou des cibles. Il suffit de toucher (ou cliquer pour un ordinateur) l'émoji pour le retirer en cas de défaite.");
+    msg.membrer.send("ATTENTION cette explication est por le tableau à 3 cibles, pas pour celui à une cible par ligne.")
     
 };
 
@@ -123,8 +123,35 @@ aideCommande = msg => {
    
 };
 
+rebootGuerre = (msg, data) =>{
+    data = data[msg.guild.name]
+    if(data.length < 1){
+        msg.reply("Vous devez d'abord avoir lancé une guerre pour la réinitailisée")
+    }
+    else{
+        for(let i = 0 ; i < data.length; i++){
+
+            message = msg.channel.messages.get(data[i].id)
+            react_msg = message.reactions
+            react_msg.every(r => {
+            if(!r.me){
+                users = r.fetchUsers().then(users => {
+
+                    users.every(user => {
+                        r.remove(user)
+                    });
+                })
+            }
+            return true
+            });
+        }
+
+    }
+}
+
 
 exports.newGuerre = newGuerre;
 exports.delGuerre = delGuerre;
 exports.aideGuerre = aideGuerre;
 exports.aideCommande = aideCommande;
+exports.rebootGuerre = rebootGuerre;
