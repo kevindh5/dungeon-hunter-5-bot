@@ -22,6 +22,7 @@ bot.on("ready", ()=>{
 
 bot.on("message", (msg) => {
 //    const a = (1 === 2) ? "1":  (1===2) ? "2": "3";
+    console.log(msg.guild.emojis);
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
     }
@@ -29,7 +30,7 @@ bot.on("message", (msg) => {
         
        if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content ==="!aideGuerre pour l'utilisation du tableau."){
            
-           if(!msg.content.startsWith(":punch:")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
+           if(!msg.content.startsWith(":punch:") && !msg.content ==="!aideGuerre pour l'utilisation du tableau.")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
            const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
            msg.react(reaction);
            }
