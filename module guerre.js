@@ -35,26 +35,12 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 
                 
                 
-                for(let i = 0; i < parseInt(num/3); i++){
-                    const reponse = "Cbl "+(i+1)+": "+jaune+jaune+jaune;
-                    const reponse2 = "Cbl "+(i+2)+": "+vert+vert+vert;
-                    const reponse3 = "Cbl "+(i+3)+": "+bleu+bleu+bleu;
+                for(let i = 0; i < num; i++){
+                    const reponse = "Cbl "+(i+1)+": "+jaune+vert+bleu;
                     msg.channel.send(reponse);
-                    msg.channel.send(reponse2);
-                    msg.channel.send(reponse3);
                 };
                 
-                if(num - parseInt(num/3)*3 === 1){
-                    const reponse = "Cbl "+parseInt(num/3)+1+": "+jaune+jaune+jaune;
-                    msg.channel.send(reponse);
-                }
-                else if (num - parseInt(num/3)*3 === 2){
-                    const reponse = "Cbl "+ (parseInt(num/3)+1) +": "+jaune+jaune+jaune;
-                    const reponse2 = "Cbl "+ (parseInt(num/3)+2) +": "+vert+vert+vert;
-                    msg.channel.send(reponse);
-                    msg.channel.send(reponse2);
-                    
-                }
+    
             
 //                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
 //
