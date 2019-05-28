@@ -30,7 +30,7 @@ bot.on("message", (msg) => {
         
        if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content ==="!aideGuerre pour l'utilisation du tableau."){
            
-           if(!msg.content.startsWith(":punch:") && !msg.content ==="!aideGuerre pour l'utilisation du tableau.")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
+           if(!msg.content.startsWith(":punch:") && !msg.content === "!aideGuerre pour l'utilisation du tableau."){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
            const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
            msg.react(reaction);
            }
