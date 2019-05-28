@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 //const emoji  =new Emoji();
 
 newGuerre = (msg, string) =>{// string correspond a msg.content
+    
     const index = "!newGuerre";
     if(index === string){
        msg.reply("Il manque l'argument signifiant le nombre de joueur adverse comme: !newGuerre 15 .") 
@@ -19,6 +20,9 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
         else{
             
             if(num < 31){
+                const jaune = ":star:"
+                const vert = (msg.guild.name === "Guilde Lumière") ? msg.guild.emojis.get('573106067777650689') : ":green_apple:";
+                const bleu = (msg.guild.name === 'Guilde Lumière') ? msg.guild.emojis.get('573115452511879168') : ":droplet: "
                 
                 msg.channel.send(":punch:_________TABLEAU DE GUERRE_________:punch:").then(m =>{m.pin();});
                 msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
@@ -29,10 +33,27 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 msg.channel.send(":boom: Déclenchement Frénésie, 10 à 12");
                 
                 
-                for(let i = 0; i < num; i++){
-                    
-                    let reponse = "Cbl "+(i+1)+": :star::star::star:"
+                
+                
+                for(let i = 0; i < parseInt(num/3); i++){
+                    const reponse = "Cbl "+(i+1)+": "+jaune+jaune+jaune;
+                    const reponse2 = "Cbl "+(i+2)+": "+vert+vert+vert;
+                    const reponse3 = "Cbl "+(i+3)+": "+bleu+bleu+bleu;
                     msg.channel.send(reponse);
+                    msg.channel.send(reponse2);
+                    msg.channel.send(reponse3);
+                };
+                
+                if(num - parseInt(num/3)*3 === 1){
+                    const reponse = "Cbl "+parseInt(num/3)+1+": "+jaune+jaune+jaune;
+                    msg.channel.send(reponse);
+                }
+                else if (num - parseInt(num/3)*3 === 2){
+                    const reponse = "Cbl "+ (parseInt(num/3)+1) +": "+jaune+jaune+jaune;
+                    const reponse2 = "Cbl "+ (parseInt(num/3)+2) +": "+vert+vert+vert;
+                    msg.channel.send(reponse);
+                    msg.channel.send(reponse2);
+                    
                 }
             
 //                msg.guild.members.every(members => {// on envoie un message d'alerte pour tout les membres 
@@ -153,9 +174,20 @@ rebootGuerre = (msg, data) =>{
     }
 }
 
+rename = (msg, data) => {
+    const nom_commande = "!rename"
+    if(msg.content === nom_commande){
+        msg.reply('Il manque la cible et le joueur à changé')
+    }
+    else if(msg[nom_commande.length] !== " "){
+       msg.reply('');     
+    }
+}
+
 
 exports.newGuerre = newGuerre;
 exports.delGuerre = delGuerre;
 exports.aideGuerre = aideGuerre;
 exports.aideCommande = aideCommande;
 exports.rebootGuerre = rebootGuerre;
+exports.renname = rename;

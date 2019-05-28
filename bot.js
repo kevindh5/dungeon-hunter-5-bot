@@ -22,7 +22,6 @@ bot.on("ready", ()=>{
 
 bot.on("message", (msg) => {
 //    const a = (1 === 2) ? "1":  (1===2) ? "2": "3";
-    console.log(msg.guild.emojis);
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
     }
