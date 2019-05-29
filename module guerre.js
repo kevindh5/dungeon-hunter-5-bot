@@ -36,7 +36,10 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
                 
                 
                 for(let i = 0; i < num; i++){
-                    const reponse = "Cbl "+(i+1)+": "+jaune+vert+bleu;
+                    
+                    const num = (i+1 < 10) ? "0"+(i+1) : i+1
+                    
+                    const reponse = "Cbl "+ num +": "+jaune+vert+bleu;
                     msg.channel.send(reponse);
                 };
                 
@@ -162,13 +165,60 @@ rebootGuerre = (msg, data) =>{
 
 rename = (msg, data) => {
     const nom_commande = "!rename"
+    data = data[msg.guild.name];
     
-    if(msg.content === nom_commande){
+    console.log(msg.content[nom_commande.length])
+    
+    if(data.length < 1){
+        msg.reply("Vous devez créer une guerre pour ensuite changer le nom d'une cible.");    
+    }
+    else if(msg.content === nom_commande){
         msg.reply('Il manque la cible et le joueur à changé')
     }
-    else if(msg[nom_commande.length] !== " "){
-       msg.reply('');     
+    else if(msg.content[nom_commande.length] !== " "){
+       msg.reply('Il manque un espace entre la commande et la cible');     
     }
+    else{
+        let indexMid;
+        
+        for(let i = nom_commande.length; i< msg.content.length; i++){
+            
+            if(msg.content[i] === ":" || msg.content[i] ==="=" || msg.content[i] ==="/" || msg.content[i] ===">"){
+                indexMid = i;
+            }
+        }
+
+        let num_cbl = msg.content.substr(nom_commande.length+1, (indexMid - (nom_commande.length+1)));
+        const nom_newcbl = msg.content.substr(indexMid+1);
+        
+        if(isNaN(num_cbl)){
+            msg.reply("Vous devez mettre un nombre puis : et ensuite le nom de cette cible. ex: !rename 12 : Pedro");
+        }
+        else if(nom_newcbl === ""){
+            msg.reply("Vous devez ajouter un nombre à cette cible.");
+        }
+        else{
+            num_cbl = parseInt(num_cbl);
+            
+            const cible_total = data.length - 7 //7 étant le nombre d'info au début du tableau
+            
+            const new_msg_index = cible_total - num_cbl
+            
+            if( typeof data[new_msg_index] === "undefined"){
+                msg.reply("La cible demandée n'existe pas.")
+            }
+            else{
+                
+                const new_msg = nom_newcbl + data[new_msg_index].content.substr(6);
+
+                data[new_msg_index].edit(new_msg).catch(console.error);
+
+            }
+        
+        }
+         
+    }
+    
 }
 
 
