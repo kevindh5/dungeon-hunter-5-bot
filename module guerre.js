@@ -162,6 +162,7 @@ rebootGuerre = (msg, data) =>{
 
 rename = (msg, data) => {
     const nom_commande = "!rename"
+    
     if(msg.content === nom_commande){
         msg.reply('Il manque la cible et le joueur à changé')
     }
