@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const commandsLead = ["!newGuerre", "!delGuerre", "!rebootGuerre"];
-const commands = ["!aideGuerre"]
-const guerre = require("./module guerre", "!rename");
+const commandsLead = ["!newGuerre", "!delGuerre", "!rebootGuerre", "!aideGuerre","!rename"];
+const commands = ["!aideGuerre","!rename"]
+const guerre = require("./module guerre");
 const ROLE = "Leader"
 const NOM_BOT = "Bot Lumière"
 
@@ -53,6 +53,10 @@ bot.on("message", (msg) => {
                 case "!delGuerre": guerre.delGuerre(msg, lastWarMsg);
                     break;
                 case "!rebootGuerre": guerre.rebootGuerre(msg, lastWarMsg);
+                    break;
+                case "!aideGuerre": guerre.aideGuerre(msg);
+                    break;
+                case "!rename": guerre.renname(msg, lastWarMsg);
                     break;
                 default:
                     msg.reply("La commande donnée n'est pas bonne.");//ne sear jamais utilisée
