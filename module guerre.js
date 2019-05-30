@@ -179,7 +179,7 @@ rename = (msg, data) => {
        msg.reply('Il manque un espace entre la commande et la cible');     
     }
     else{
-        let indexMid;
+        let indexMid;//represente l'index du : ou /  ou >
         
         for(let i = nom_commande.length; i< msg.content.length; i++){
             
@@ -209,7 +209,7 @@ rename = (msg, data) => {
             }
             else{
                 
-                const new_msg = nom_newcbl + data[new_msg_index].content.substr(6);
+                const new_msg = data[new_msg_index].content.substr(0,6) + nom_newcbl + " " + data[new_msg_index].content.substr(6);
 
                 data[new_msg_index].edit(new_msg).catch(console.error);
 
