@@ -28,11 +28,11 @@ bot.on("message", (msg) => {
     }
     else if(msg.author.bot === true && msg.author.username === NOM_BOT){
         
-       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content ==="!aideGuerre pour l'utilisation du tableau."){
+       if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content.startsWith("!aideGuerre")){
            
-           if(!msg.content.startsWith(":punch:")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
-           const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
-           msg.react(reaction);
+           if(!msg.content.startsWith(":punch:") && !msg.content.startsWith("!aideGuerre")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
+               const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
+               msg.react(reaction);
            }
            
            
