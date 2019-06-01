@@ -1,14 +1,15 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const commandsLead = ["!newGuerre", "!delGuerre", "!rebootGuerre", "!aideGuerre","!rename"];
-const commands = ["!aideGuerre","!rename"]
+const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre"];
+const commands = ["!aideGuerre",  "!rename", "!r"]
 const guerre = require("./module guerre");
 const ROLE = "Leader"
 const NOM_BOT = "Bot Lumière"
 
 let emoji_react;
 
-let lastWarMsg = {}
+let lastWarMsg = {};
+
 
 bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
 
@@ -41,42 +42,64 @@ bot.on("message", (msg) => {
     else if(msg.member.user.bot === false && msg.content[0] === "!" ){//on regarde que ce n'est pas un bot, que cela commence par ! pour signifié une commande
         
         const role = msg.member.roles.find(role => {return role.name === ROLE}); //on voit si il al erole leader
+        
         if(role !== null && estCommandLead(msg.content) !== false){//on regarde si il a le role leader
             const command = commandsLead[estCommandLead(msg.content)]
             switch(command){
+                    
                 case "!newGuerre": if(lastWarMsg[msg.guild.name].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
                                         lastWarMsg[msg.guild.name] = [];
                                     };
                                       
-                                    guerre.newGuerre(msg, msg.content); //pour que cela n'aye pas voir les commandes non-leader
+                                    guerre.newGuerre(msg, msg.content, "!newGuerre"); //pour que cela n'aye pas voir les commandes non-leader
                     break;
-                case "!delGuerre": guerre.delGuerre(msg, lastWarMsg);
+                    
+                case "!ng": if(lastWarMsg[msg.guild.name].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
+                                        lastWarMsg[msg.guild.name] = [];
+                                    };
+                                      
+                                    guerre.newGuerre(msg, msg.content, "!ng"); //pour que cela n'aye pas voir les commandes non-leader
+                    break;
+                case "!dg": guerre.delGuerre(msg, lastWarMsg,"!dg");
+                    break;
+                case "!delGuerre": guerre.delGuerre(msg, lastWarMsg,"!delGuerre");
                     break;
                 case "!rebootGuerre": guerre.rebootGuerre(msg, lastWarMsg);
-                    break;
-                case "!aideGuerre": guerre.aideGuerre(msg);
-                    break;
-                case "!rename": guerre.renname(msg, lastWarMsg);
                     break;
                 default:
                     msg.reply("La commande donnée n'est pas bonne.");//ne sear jamais utilisée
             };
             
         }
-        else if(role === null && estCommandLead(msg.content) !== false){
-            msg.reply("Cette commande est réservé au personne ayant le rôle "+ROLE+".");
-        }
-        else {
+        else if (estCommand(msg.content) !== false){
+            console.log("ivi")
             const command = commands[estCommand(msg.content)]
             switch(command){
                 case "!aideGuerre": guerre.aideGuerre(msg);
                     break;
-                case "!rename": guerre.renname(msg, lastWarMsg);
+                case "!rename": guerre.renname(msg, lastWarMsg, "!rename");
+                    break;
+                case "!r": guerre.renname(msg, lastWarMsg, "!r");
                     break;
                 default:
-                    msg.reply("La commande donnée n'est pas bonne.");
-            };
+                    msg.reply("La commande donnée n'est pas bonne.");  
+                    
+            }
         }
+        else if(role === null && estCommandLead(msg.content) !== false){
+            msg.reply("Cette commande est réservé au personne ayant le rôle "+ROLE+".");
+        }
+//        else{
+//            const command = commands[estCommand(msg.content)]
+//            switch(command){
+//                case "!aideGuerre": guerre.aideGuerre(msg);
+//                    break;
+//                case "!rename": guerre.renname(msg, lastWarMsg);
+//                    break;
+//                default:
+//                    msg.reply("La commande donnée n'est pas bonne.");
+//            };
+//        }
         
     };
     

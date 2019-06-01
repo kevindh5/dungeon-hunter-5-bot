@@ -2,9 +2,9 @@ const fs = require('fs');
 const Discord = require("discord.js");
 //const emoji  =new Emoji();
 
-newGuerre = (msg, string) =>{// string correspond a msg.content
+newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
     
-    const index = "!newGuerre";
+    const index = nom_utilisé;
     if(index === string){
        msg.reply("Il manque l'argument signifiant le nombre de joueur adverse comme: !newGuerre 15 .") 
     }
@@ -64,9 +64,9 @@ newGuerre = (msg, string) =>{// string correspond a msg.content
     };
 };
 
-delGuerre = (msg, data) =>{
+delGuerre = (msg, data, nom_utilisé) =>{
 //    console.log(data[msg.guild.name].length);
-    const index = "!delGuerre";
+    const index = nom_utilisé;
     data = data[msg.guild.name];
     if(data.length < 1){
         msg.reply("Vous devez d'abord creer une guerre.")
@@ -163,8 +163,8 @@ rebootGuerre = (msg, data) =>{
     }
 }
 
-rename = (msg, data) => {
-    const nom_commande = "!rename"
+rename = (msg, data, nom_utilisé) => {
+    const nom_commande = nom_utilisé;
     data = data[msg.guild.name];
     
     console.log(msg.content[nom_commande.length])
@@ -209,7 +209,7 @@ rename = (msg, data) => {
             }
             else{
                 
-                const new_msg = data[new_msg_index].content.substr(0,6) + nom_newcbl + " " + data[new_msg_index].content.substr(6);
+                const new_msg = data[new_msg_index].content.substr(0,6) +" "+ nom_newcbl + " " + data[new_msg_index].content.substr(6);
 
                 data[new_msg_index].edit(new_msg).catch(console.error);
 
