@@ -1,28 +1,42 @@
 const Discord = require("discord.js");
-const bot = new Discord.Client();
+const bot  =new Discord.Client();
 const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre"];
 const commands = ["!aideGuerre",  "!rename", "!r"]
-const guerre = require("./module guerre");
+const guerre  = require("./module guerre");
 const ROLE = "Leader"
-const NOM_BOT = "Bot Lumière"
+const NOM_BOT = "bot_test"
 
 let emoji_react;
 
-let lastWarMsg = {};
+let lastWarMsg = {}
 
-
-bot.login("NTY4NzE4NDM4NzQzMTQ2NDk2.XLmLwg.gcUQx1Atz0fvlqHxab5y0B3vyAA");
+bot.login("NTgxNTQxMjk1NzY0NTM3MzU0.XOgwmg.-2bzRuqSLQ4kngYRa71P6jQd2tI");
 
 bot.on("ready", ()=>{
     bot.guilds.every(g => {
         lastWarMsg[g.name] = [];
+
+       g.channels.every((channel) =>{
+//           console.log(channel.name);
+//           console.log(channel.type);
+           if (channel.type !== "category"){
+               lastWarMsg[g.name][channel.id] = []
+           }
+           return true;
+       });
+//        for(let i in g.channels){
+//            console.log(i.name);
+//        }
+//        console.log(g.channels);
         return true
     })
     console.log('Le bot est près');
+    console.log(lastWarMsg);
     emoji_react = bot.emojis.get("577222328895930368");
 });
 
 bot.on("message", (msg) => {
+//    console.log(msg.channel.id)
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
     }
@@ -30,13 +44,13 @@ bot.on("message", (msg) => {
         
        if(msg.content.startsWith("Cbl") || msg.content.startsWith(":information_source:") || msg.content.startsWith(":shield:") || msg.content.startsWith(":boom:") || msg.content.startsWith(":punch:") || msg.content.startsWith("!aideGuerre")){
            
-           if(!msg.content.startsWith(":punch:") && !msg.content.startsWith("!aideGuerre")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE
+           if(!msg.content.startsWith(":punch:") && !msg.content.startsWith("!aideGuerre")){//POur pas que ça fasse une reaction sur TABLEUA GUERRE et a !aideGuerre
                const reaction = (msg.guild.name === "Guilde Lumière") ? emoji_react : "🆓";
                msg.react(reaction);
            }
            
            
-           lastWarMsg[msg.guild.name].unshift(msg);
+           lastWarMsg[msg.guild.name][msg.channel.id].unshift(msg);
        }
     }
     else if(msg.member.user.bot === false && msg.content[0] === "!" ){//on regarde que ce n'est pas un bot, que cela commence par ! pour signifié une commande
@@ -72,7 +86,6 @@ bot.on("message", (msg) => {
             
         }
         else if (estCommand(msg.content) !== false){
-            console.log("ivi")
             const command = commands[estCommand(msg.content)]
             switch(command){
                 case "!aideGuerre": guerre.aideGuerre(msg);
@@ -190,13 +203,22 @@ function longMsg(after, mode){
         after.send("Vous êtes promu au rang de "+ROLE +" !!");
         after.send("Vous avez donc accès aux commandes qui permettent de contrôler le bot: "+NOM_BOT+" (moi)!");
         after.send("Pour l'instant il y a:");
-        after.send("   !newGuerre [nb de joueur ennemi], elle permet de créer un tableau pour gérer les attaques; ex: "+commandsLead[0]);
-        after.send("   !delGuerre [num de cible conservée], elle permet de supprimer un nombre de cibles; ex: "+commandsLead[1]+" 10");
-        after.send("   !rebootGuerre , elle permet d'enlever les reactions , recommencer une guerre sans forcément refaire le tableau")
-        after.send("   !rename [nb d'une cible] : [nouveau nom] , permet de changer le nom d'une cible ex: ex !rename 12 : Raph");
+        after.send("!newGuerre [nb de joueur ennemi], elle permet de créer un tableau pour gérer les attaques; ex: "+commandsLead[0]);
+        after.send(".");
+        after.send("!delGuerre [num de cible conservée], elle permet de supprimer un nombre de cibles; ex: delGuerre 10");
+        after.send("si vous voulez complétement enlever la guerre (donc les infos sur l'armurie et la frénésie) vous pouvez faire '!delGuerre' sans aucun nombre");
+        after.send(".");
+        after.send("!rebootGuerre , elle permet d'enlever les reactions , recommencer une guerre sans forcément refaire le tableau");
+        after.send(".");
+        after.send("!rename [nb d'une cible] : [nouveau nom] , permet de changer le nom d'une cible ex: ex !rename 12 : Raph");
+        after.send(".");
+        after.send("Quelques commandes ont des abrévations car elles sont souvent utilisées, pour les plus doués d'entre vous elles serviront.");
+        after.send('Par conséquent:');
+        after.send("!newGuerre === !ng")
+        after.send("!deleteGuerre === !dg")
+        after.send("!rename === !r")
     }
     else{
         after.send("Vous êtes destitué du role de "+ROLE+" ,vous n'avez plus accès aux commandes pour me contrôler.").catch(console.error);
     };
 };
-

@@ -67,11 +67,12 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
 delGuerre = (msg, data, nom_utilisé) =>{
 //    console.log(data[msg.guild.name].length);
     const index = nom_utilisé;
-    data = data[msg.guild.name];
-    if(data.length < 1){
-        msg.reply("Vous devez d'abord creer une guerre.")
+    data = data[msg.guild.name][msg.channel.id];
+    
+    if(data.length < 1){//s i on a activée une guerre 
+        msg.reply("Vous n'avez pas lancée de guerre, la commande est donc inutile.")
     }
-    else if(index === msg.content){
+    else if(index === msg.content){//si on a écrit la commande seulement
         
         for(let i = 0; i < data.length; i++){
             data[i].delete().catch(console.error);
@@ -79,7 +80,7 @@ delGuerre = (msg, data, nom_utilisé) =>{
         msg.channel.send("Suppression total de la guerre.");
         return [] 
     }
-    else if(msg.content[index.length] !== " "){
+    else if(msg.content[index.length] !== " "){//si il n'y a pas l'espace
         msg.reply("Il doit avoir un espace entre la commande et le numéro, exemple: !delGuerre 25, ou !delGuerre 15 .") 
     }
     else if(msg.content.length > index.length+1){//permet de voir si il ya plus apres que simplement la commande  car on compte l'espace
@@ -93,14 +94,12 @@ delGuerre = (msg, data, nom_utilisé) =>{
         else if(num < 0){
             msg.reply("Le nombre doit être positif");    
         }
-        else if (data.length === 0){
-            msg.reply("Vous n'avez pas lancée de guerre, la commande est donc inutile");
-        }
-        else if (num > 30){
-            msg.reply("Le nombre doit être inférieur à 30")
+        else if(num > data.length - 7 ){
+            msg.reply("Le nombre doit être inférieur à " + (data.length - 7) +".")
         }
         else{
-            if(data.length < num){
+            console.log(data.length);
+            if(data.length < num){ //-7 car on enleve les 7 msg d'informations au début
                 msg.reply("Le nombre doit être au moins égale au nombre max de cibles")
             }
             else{
@@ -138,7 +137,7 @@ aideCommande = msg => {
 };
 
 rebootGuerre = (msg, data) =>{
-    data = data[msg.guild.name]
+    data = data[msg.guild.name][msg.channel.id]
     if(data.length < 1){
         msg.reply("Vous devez avoir lancé une guerre pour la réinitailisée")
     }
@@ -165,7 +164,7 @@ rebootGuerre = (msg, data) =>{
 
 rename = (msg, data, nom_utilisé) => {
     const nom_commande = nom_utilisé;
-    data = data[msg.guild.name];
+    data = data[msg.guild.name][msg.channel.id];
     
     console.log(msg.content[nom_commande.length])
     
