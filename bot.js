@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot  =new Discord.Client();
 const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre", "!rebootStars","!rs"];
-const commands = ["!aideGuerre",  "!rename", "!r"]
+const commands = ["!aideGuerre",  "!rename", "!r", "!frenesie", "!f"];
 const guerre  = require("./module guerre");
 const ROLE = "Leader"
 const NOM_BOT = "Bot Lumière"
@@ -24,6 +24,10 @@ bot.on("ready", ()=>{
            }
            return true;
        });
+//        for(let i in g.channels){
+//            console.log(i.name);
+//        }
+//        console.log(g.channels);
         return true
     })
     console.log('Le bot est près');
@@ -95,6 +99,9 @@ bot.on("message", (msg) => {
                     break;
                 case "!r": guerre.renname(msg, lastWarMsg, "!r");
                     break;
+                case "!f":
+                case "!frenesie": guerre.frenesie(msg);
+                    break;
                 default:
                     msg.reply("La commande donnée n'est pas bonne.");  
                     
@@ -143,11 +150,13 @@ bot.on("guildMemberUpdate", (before, after) =>{
 bot.on("channelCreate", channel => {
        if (channel.type !== "category"){
             lastWarMsg[channel.guild.name][channel.id] = []
+           console.log(lastWarMsg);
         }
 });
 
 bot.on("channelDelete", channel => {
         delete lastWarMsg[channel.guild.name][channel.id];
+        console.log(lastWarMsg);
 });
 
 

@@ -65,7 +65,6 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
 };
 
 delGuerre = (msg, data, nom_utilisé) =>{
-    console.log("elGuerre");
 //    console.log(data[msg.guild.name].length);
     const index = nom_utilisé;
     data = data[msg.guild.name][msg.channel.id];
@@ -140,6 +139,7 @@ aideCommande = msg => {
 rebootReact = (msg, data, type) =>{
     //si type corresponde à tout alors on supprimme toutes les reactions
     //si type === etoile alors on supprimme seulement les reactions qui sont dessous les messages de cibles
+    console.log("cc")
     data = data[msg.guild.name][msg.channel.id]
     type_de_la_fonction = (type === 'tout') ? 0 : 7;  //7 correspond aux 7 messages d'infos en debut de guerre
 
@@ -226,6 +226,10 @@ rename = (msg, data, nom_utilisé) => {
     
 }
 
+frenesie = msg =>{
+    msg.channel.send("https://tenor.com/view/kitty-machine-gun-ak45-shooting-gun-gif-7488781");
+};
+
 
 exports.newGuerre = newGuerre;
 exports.delGuerre = delGuerre;
@@ -233,3 +237,4 @@ exports.aideGuerre = aideGuerre;
 exports.aideCommande = aideCommande;
 exports.rebootReact = rebootReact;
 exports.renname = rename;
+exports.frenesie = frenesie;
