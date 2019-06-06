@@ -227,7 +227,7 @@ rename = (msg, data, nom_utilisé) => {
 }
 
 frenesie = msg =>{
-    msg.channel.send("https://tenor.com/view/kitty-machine-gun-ak45-shooting-gun-gif-7488781");
+    msg.channel.send("https://cdn.discordapp.com/attachments/563858405073223701/581896877591625745/frene2.jpg");
 };
 
 
