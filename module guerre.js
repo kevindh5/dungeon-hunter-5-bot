@@ -65,6 +65,7 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
 };
 
 delGuerre = (msg, data, nom_utilisé) =>{
+    console.log("elGuerre");
 //    console.log(data[msg.guild.name].length);
     const index = nom_utilisé;
     data = data[msg.guild.name][msg.channel.id];
@@ -136,31 +137,36 @@ aideCommande = msg => {
    
 };
 
-rebootGuerre = (msg, data) =>{
+rebootReact = (msg, data, type) =>{
+    //si type corresponde à tout alors on supprimme toutes les reactions
+    //si type === etoile alors on supprimme seulement les reactions qui sont dessous les messages de cibles
     data = data[msg.guild.name][msg.channel.id]
+    type_de_la_fonction = (type === 'tout') ? 0 : 7;  //7 correspond aux 7 messages d'infos en debut de guerre
+
     if(data.length < 1){
         msg.reply("Vous devez avoir lancé une guerre pour la réinitailisée")
     }
     else{
-        for(let i = 0 ; i < data.length; i++){
-
+        for(let i = 0 ; i < data.length - type_de_la_fonction; i++){
             message = msg.channel.messages.get(data[i].id)
+            
             react_msg = message.reactions
             react_msg.every(r => {
             if(!r.me){
+//                console.log(message.content);
                 users = r.fetchUsers().then(users => {
 
                     users.every(user => {
-                        r.remove(user)
+                        r.remove(user).catch(console.error);
                     });
                 })
             }
             return true
             });
-        }
+        };
 
-    }
-}
+    };
+};
 
 rename = (msg, data, nom_utilisé) => {
     const nom_commande = nom_utilisé;
@@ -225,5 +231,5 @@ exports.newGuerre = newGuerre;
 exports.delGuerre = delGuerre;
 exports.aideGuerre = aideGuerre;
 exports.aideCommande = aideCommande;
-exports.rebootGuerre = rebootGuerre;
+exports.rebootReact = rebootReact;
 exports.renname = rename;

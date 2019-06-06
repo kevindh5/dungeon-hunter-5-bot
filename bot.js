@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const bot  =new Discord.Client();
-const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre"];
+const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre", "!rebootStars","!rs"];
 const commands = ["!aideGuerre",  "!rename", "!r"]
 const guerre  = require("./module guerre");
 const ROLE = "Leader"
@@ -24,10 +24,6 @@ bot.on("ready", ()=>{
            }
            return true;
        });
-//        for(let i in g.channels){
-//            console.log(i.name);
-//        }
-//        console.log(g.channels);
         return true
     })
     console.log('Le bot est près');
@@ -36,6 +32,7 @@ bot.on("ready", ()=>{
 });
 
 bot.on("message", (msg) => {
+    console.log(msg.channel);
 //    console.log(msg.channel.id)
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
         return false;
@@ -61,24 +58,28 @@ bot.on("message", (msg) => {
             const command = commandsLead[estCommandLead(msg.content)]
             switch(command){
                     
-                case "!newGuerre": if(lastWarMsg[msg.guild.name].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
-                                        lastWarMsg[msg.guild.name] = [];
+                case "!newGuerre": if(lastWarMsg[msg.guild.name][msg.channel.id].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
+                                        lastWarMsg[msg.guild.name][msg.channel.id] = [];
                                     };
-                                      
                                     guerre.newGuerre(msg, msg.content, "!newGuerre"); //pour que cela n'aye pas voir les commandes non-leader
                     break;
                     
-                case "!ng": if(lastWarMsg[msg.guild.name].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
-                                        lastWarMsg[msg.guild.name] = [];
+                case "!ng": if(lastWarMsg[msg.guild.name][msg.channel.id].length > 0){//on renitialise les LastWarMsg pour que la func delGuerre marche bien.
+                                        lastWarMsg[msg.guild.name][msg.channel.id] = [];
                                     };
-                                      
+                                     
                                     guerre.newGuerre(msg, msg.content, "!ng"); //pour que cela n'aye pas voir les commandes non-leader
+                     
                     break;
                 case "!dg": guerre.delGuerre(msg, lastWarMsg,"!dg");
                     break;
                 case "!delGuerre": guerre.delGuerre(msg, lastWarMsg,"!delGuerre");
                     break;
-                case "!rebootGuerre": guerre.rebootGuerre(msg, lastWarMsg);
+                case "!rebootGuerre": guerre.rebootReact(msg, lastWarMsg, "tout");
+                    break;
+                case "!rebootStars" : guerre.rebootReact(msg, lastWarMsg, "etoile");
+                    break;
+                case "!rs": guerre.rebootReact(msg, lastWarMsg, "etoile");
                     break;
                 default:
                     msg.reply("La commande donnée n'est pas bonne.");//ne sear jamais utilisée
@@ -137,6 +138,16 @@ bot.on("guildMemberUpdate", (before, after) =>{
             longMsg(after, "good by");
         }
     };
+});
+
+bot.on("channelCreate", channel => {
+       if (channel.type !== "category"){
+            lastWarMsg[channel.guild.name][channel.id] = []
+        }
+});
+
+bot.on("channelDelete", channel => {
+        delete lastWarMsg[channel.guild.name][channel.id];
 });
 
 
