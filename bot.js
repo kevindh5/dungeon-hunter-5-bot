@@ -3,7 +3,7 @@ const bot  =new Discord.Client();
 const commandsLead = ["!newGuerre", "!ng", "!delGuerre", "!dg", "!rebootGuerre", "!rebootStars","!rs"];
 const commands = ["!aideGuerre",  "!rename", "!r", "!frenesie", "!f"];
 const guerre  = require("./module guerre");
-const ROLE = "Leader"
+const ROLE = "Officier Lumiere";
 const NOM_BOT = "Bot Lumière"
 
 let emoji_react;
