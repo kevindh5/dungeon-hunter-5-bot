@@ -5,6 +5,7 @@ const commands = ["!aideGuerre",  "!rename", "!r", "!frenesie", "!f"];
 const guerre  = require("./module guerre");
 const ROLE = "Officier Lumiere";
 const NOM_BOT = "Bot Lumière"
+const HORAIRE = {};
 
 let emoji_react;
 
@@ -17,17 +18,12 @@ bot.on("ready", ()=>{
         lastWarMsg[g.name] = [];
 
        g.channels.every((channel) =>{
-//           console.log(channel.name);
-//           console.log(channel.type);
+
            if (channel.type !== "category"){
                lastWarMsg[g.name][channel.id] = []
            }
            return true;
        });
-//        for(let i in g.channels){
-//            console.log(i.name);
-//        }
-//        console.log(g.channels);
         return true
     })
     console.log('Le bot est près');
