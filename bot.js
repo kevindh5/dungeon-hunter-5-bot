@@ -11,7 +11,7 @@ let emoji_react;
 
 let lastWarMsg = {}
 
-bot.login("NTg5NDk1NDg4NTUwNjY2MjQ1.XQUgqg.AjEMwhB7_vpaLR5F3vE8fWGMn9Q");
+bot.login(process.env.TOKEN);
 
 bot.on("ready", ()=>{
     bot.guilds.every(g => {
