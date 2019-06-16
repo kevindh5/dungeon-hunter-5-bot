@@ -32,7 +32,7 @@ bot.on("ready", ()=>{
 });
 
 bot.on("message", (msg) => {
-    msg.channel.send(":ETOILE_B: ");
+    console.log(msg.guild.emojis);
     console.log(msg.channel);
 //    console.log(msg.channel.id)
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
