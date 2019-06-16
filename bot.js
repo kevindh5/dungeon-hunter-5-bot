@@ -14,6 +14,7 @@ let lastWarMsg = {}
 bot.login(process.env.TOKEN);
 
 bot.on("ready", ()=>{
+    msg.channel.send(":ETOILE_B: ");
     bot.guilds.every(g => {
         lastWarMsg[g.name] = [];
 
