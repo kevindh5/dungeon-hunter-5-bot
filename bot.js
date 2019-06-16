@@ -14,7 +14,6 @@ let lastWarMsg = {}
 bot.login(process.env.TOKEN);
 
 bot.on("ready", ()=>{
-    msg.channel.send(":ETOILE_B: ");
     bot.guilds.every(g => {
         lastWarMsg[g.name] = [];
 
@@ -33,6 +32,7 @@ bot.on("ready", ()=>{
 });
 
 bot.on("message", (msg) => {
+    msg.channel.send(":ETOILE_B: ");
     console.log(msg.channel);
 //    console.log(msg.channel.id)
     if(msg.member === null){//evite un bug quand le bot envoie des messages privés
