@@ -141,7 +141,7 @@ rebootReact = (msg, data, type) =>{
     //si type === etoile alors on supprimme seulement les reactions qui sont dessous les messages de cibles
     console.log("commande rs activé")
     data = data[msg.guild.name][msg.channel.id]
-    console.log(data);
+    console.log(data.length);
     type_de_la_fonction = (type === 'tout') ? 0 : 7;  //7 correspond aux 7 messages d'infos en debut de guerre
 
     if(data.length < 1){
