@@ -24,7 +24,7 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
                 const vert = (msg.guild.name === "Guilde Lumière") ? msg.guild.emojis.get('573106067777650689') : ":green_apple:";
                 const bleu = (msg.guild.name === 'Guilde Lumière') ? msg.guild.emojis.get('573115452511879168') : ":droplet: "
                 
-                msg.channel.send(":punch:_________TABLEAU DE GUERRE_________:punch:").then(m =>{m.pin();});
+                msg.channel.send(":punch:_________TABLEAU DE GUERRE_________:punch:");//.then(m =>{m.pin();});
                 msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
                 msg.channel.send(":information_source: Leader   //   Stratégie");
                 msg.channel.send(":shield: raids armurerie 1 à 3");
