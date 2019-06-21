@@ -46,7 +46,7 @@ bot.on("message", (msg) => {
                msg.react(reaction);
            }
            
-           
+           console.log("creation guerre");
            lastWarMsg[msg.guild.name][msg.channel.id].unshift(msg);
        }
     }
@@ -151,13 +151,11 @@ bot.on("channelCreate", channel => {
            console.log("creation channel")
            console.log(channel);
             lastWarMsg[channel.guild.name][channel.id] = []
-            console.log(lastWarMsg);
         }
 });
 
 bot.on("channelDelete", channel => {
         delete lastWarMsg[channel.guild.name][channel.id];
-        console.log(lastWarMsg);
 });
 
 
