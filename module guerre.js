@@ -150,6 +150,12 @@ rebootReact = (msg, data, type) =>{
     else{
         for(let i = 0 ; i < data.length - type_de_la_fonction; i++){
             message = msg.channel.messages.get(data[i].id)
+            console.log(' ');
+            console.log(' ');
+            console.log(' ');
+            console.log(' ');
+            console.log(' ');
+            console.log(' ');
             console.log(message);
             
             react_msg = message.reactions
