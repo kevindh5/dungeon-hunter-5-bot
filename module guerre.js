@@ -31,7 +31,7 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
                 msg.channel.send(":shield: raids armurerie 4 à 6");
                 msg.channel.send(":shield: raids armurerie 7 à 9");
                 msg.channel.send(":boom: Déclenchement Frénésie, 10 à 12");
-                
+                 console.log("Guerre cree dans "+ msg.guild.name);
                 
                 
                 
@@ -139,8 +139,9 @@ aideCommande = msg => {
 rebootReact = (msg, data, type) =>{
     //si type corresponde à tout alors on supprimme toutes les reactions
     //si type === etoile alors on supprimme seulement les reactions qui sont dessous les messages de cibles
-    console.log("cc")
+    console.log("commande rs activé")
     data = data[msg.guild.name][msg.channel.id]
+    console.log(data);
     type_de_la_fonction = (type === 'tout') ? 0 : 7;  //7 correspond aux 7 messages d'infos en debut de guerre
 
     if(data.length < 1){
@@ -149,6 +150,7 @@ rebootReact = (msg, data, type) =>{
     else{
         for(let i = 0 ; i < data.length - type_de_la_fonction; i++){
             message = msg.channel.messages.get(data[i].id)
+            console.log(message);
             
             react_msg = message.reactions
             react_msg.every(r => {
@@ -178,7 +180,7 @@ rename = (msg, data, nom_utilisé) => {
         msg.reply("Vous devez créer une guerre pour ensuite changer le nom d'une cible.");    
     }
     else if(msg.content === nom_commande){
-        msg.reply('Il manque la cible et le joueur à changé')
+        msg.reply('Il manque la cible et le joueur à changer')
     }
     else if(msg.content[nom_commande.length] !== " "){
        msg.reply('Il manque un espace entre la commande et la cible');     

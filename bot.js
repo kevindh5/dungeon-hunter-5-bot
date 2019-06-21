@@ -46,7 +46,7 @@ bot.on("message", (msg) => {
                msg.react(reaction);
            }
            
-           console.log("creation guerre");
+           
            lastWarMsg[msg.guild.name][msg.channel.id].unshift(msg);
        }
     }
@@ -55,7 +55,6 @@ bot.on("message", (msg) => {
         const role = msg.member.roles.find(role => {return role.name === ROLE}); //on voit si il al erole leader
         
         if(role !== null && estCommandLead(msg.content) !== false){//on regarde si il a le role leader
-            console.log("lead");
             const command = commandsLead[estCommandLead(msg.content)]
             switch(command){
                     
@@ -88,7 +87,6 @@ bot.on("message", (msg) => {
             
         }
         else if (estCommand(msg.content) !== false){
-            console.log("pas lead");
             const command = commands[estCommand(msg.content)]
             switch(command){
                 case "!aideGuerre": guerre.aideGuerre(msg);
@@ -106,7 +104,6 @@ bot.on("message", (msg) => {
             }
         }
         else if(role === null && estCommandLead(msg.content) !== false){
-            console.log("nul")
             msg.reply("Cette commande est réservé au personne ayant le rôle "+ROLE+".");
         }
 //        else{
