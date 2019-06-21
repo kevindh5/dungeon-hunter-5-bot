@@ -148,8 +148,6 @@ bot.on("guildMemberUpdate", (before, after) =>{
 
 bot.on("channelCreate", channel => {
        if (channel.type !== "category" && channel.type !== "dm"){
-           console.log("creation channel ")
-           console.log(channel);
             lastWarMsg[channel.guild.name][channel.id] = []
         }
 });
