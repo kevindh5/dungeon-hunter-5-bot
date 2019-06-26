@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 //const emoji  =new Emoji();
 
 newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
-    console.log("changement");
     const index = nom_utilisé;
     if(index === string){
        msg.reply("Il manque l'argument signifiant le nombre de joueur adverse comme: !newGuerre 15 .") 
@@ -31,7 +30,7 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
                 msg.channel.send(":shield: raids armurerie 4 à 6");
                 msg.channel.send(":shield: raids armurerie 7 à 9");
                 msg.channel.send(":boom: Déclenchement Frénésie, 10 à 12");
-                 console.log("Guerre cree dans "+ msg.guild.name);
+                 console.log("Guerre creee dans "+ msg.guild.name);
                 
                 
                 
