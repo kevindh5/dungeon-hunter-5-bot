@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 //const emoji  =new Emoji();
 
 newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
-    
+    console.log("changement");
     const index = nom_utilisé;
     if(index === string){
        msg.reply("Il manque l'argument signifiant le nombre de joueur adverse comme: !newGuerre 15 .") 
