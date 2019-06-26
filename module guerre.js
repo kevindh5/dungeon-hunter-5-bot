@@ -21,8 +21,8 @@ newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
             
             if(num < 31){
                 const jaune = ":star:"
-                const vert = (msg.guild.name === "Guilde Lumière") ? msg.guild.emojis.get('573106067777650689') : ":green_apple:";
-                const bleu = (msg.guild.name === 'Guilde Lumière') ? msg.guild.emojis.get('573115452511879168') : ":droplet: "
+                const vert = (msg.guild.emojis.find("name", "ETOILE_V")) ? msg.guild.emojis.find("name", "ETOILE_V") : ":green_apple:";
+                const bleu = (msg.guild.emojis.find("name", "ETOILE_B")) ? msg.guild.emojis.find("name", "ETOILE_B") : ":droplet: "
                 
                 msg.channel.send(":punch:_________TABLEAU DE GUERRE_________:punch:");//.then(m =>{m.pin();});
                 msg.channel.send("!aideGuerre pour l'utilisation du tableau.");
