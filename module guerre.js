@@ -1,7 +1,6 @@
-const fs = require('fs');
+const regex = require("regex");
 const Discord = require("discord.js");
 //const emoji  =new Emoji();
-
 newGuerre = (msg, string, nom_utilisé) =>{// string correspond a msg.content
     const index = nom_utilisé;
     if(index === string){
@@ -172,6 +171,7 @@ rebootReact = (msg, data, type) =>{
 };
 
 rename = (msg, data, nom_utilisé) => {
+    
     const nom_commande = nom_utilisé;
     data = data[msg.guild.name][msg.channel.id];
     
@@ -195,38 +195,72 @@ rename = (msg, data, nom_utilisé) => {
                 indexMid = i;
             }
         }
-
-        let num_cbl = msg.content.substr(nom_commande.length+1, (indexMid - (nom_commande.length+1)));
-        const nom_newcbl = msg.content.substr(indexMid+1);
         
-        if(isNaN(num_cbl)){
-            msg.reply("Vous devez mettre un nombre puis : et ensuite le nom de cette cible. ex: !rename 12 : Pedro");
+        let virgule = [];
+        
+        if(/,/.test(msg.content)){
+            for(let i in msg.content){
+                if(msg.content[i] === ","){
+                    virgule.push(parseInt(i));
+                }
+            }
         }
-        else if(nom_newcbl === ""){
-            msg.reply("Vous devez ajouter un nombre à cette cible.");
+        
+        virgule.push(msg.content.length - 1);
+        let nom_newcbl = [];
+        let depart = indexMid;
+        
+        if(virgule.length < 1){
+            nom_newcbl.push(msg.content.substr(indexMid+1));
         }
         else{
-            num_cbl = parseInt(num_cbl);
-            
-            const cible_total = data.length - 7 //7 étant le nombre d'info au début du tableau
-            
-            const new_msg_index = cible_total - num_cbl
-            
-            if( typeof data[new_msg_index] === "undefined"){
-                msg.reply("La cible demandée n'existe pas.")
-            }
-            else{
+            for(let i in virgule){
+                let nom = msg.content.substr(depart+1, virgule[i] - depart);
+                nom = nom.replace(",","");
+                nom = nom.replace(" ", "");
+                if(nom === ""){//l'utilisateur a pu enchainer deux virgule ou ne âs mettre de nom
+                    nom_newcbl = undefined;
+                    break;
+                }
+                else{
+                    nom_newcbl.push(nom);
+                    depart = virgule[i]; 
+                }
                 
-                const new_msg = data[new_msg_index].content.substr(0,6) +" "+ nom_newcbl + " " + data[new_msg_index].content.substr(6);
-
-                data[new_msg_index].edit(new_msg).catch(console.error);
 
             }
-        
         }
-         
-    }
-    
+        
+        
+        let num_cbl = parseInt(msg.content.substr(nom_commande.length+1, (indexMid - (nom_commande.length+1)))); 
+        
+        if(isNaN(num_cbl) || num_cbl === ""){
+            msg.reply("Vous devez mettre un nombre puis : et ensuite le nom de cette cible. ex: !rename 12 : Pedro");
+        }
+        else if( nom_newcbl === undefined ){
+            msg.reply("Vous oublié de mettre un nom à la cible ou vous avez enchainné deux virgules.");
+        }
+        else{
+            const nb_de_cible = data.length - 7 //7 étant le nombre d'info au début du tableau
+            let new_msg_index = nb_de_cible - num_cbl;
+            
+            for(let i in nom_newcbl){
+                if( typeof data[new_msg_index] === "undefined"){
+                    msg.reply("La (l'une des) cibles demandée n'existe pas.")
+                }
+                else{
+
+                    const new_msg = data[new_msg_index].content.substr(0,6) +" "+ nom_newcbl[i] + " " + data[new_msg_index].content.substr(6);
+
+                    data[new_msg_index].edit(new_msg).catch(console.error);
+
+                }
+                
+                new_msg_index--;
+            }
+        }
+        
+  }
 }
 
 frenesie = msg =>{
